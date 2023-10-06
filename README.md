@@ -7,7 +7,7 @@ Common libraries used by Play Economy services.
 MacOS 
 
 ```shell
-version='1.0.6'
+version='1.0.7'
 owner='iga1dotnetmicroservices'
 gh_pat='[PAT HERE]'
 
@@ -19,7 +19,7 @@ dotnet nuget push ../packages/Play.Common.$version.nupkg --api-key $gh_pat --sou
 Windows Powershell
 
 ```powershell
-$version='1.0.6'
+$version='1.0.7'
 $owner='iga1dotnetmicroservices'
 gh_pat='[PAT HERE]'
 
