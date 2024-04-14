@@ -102,6 +102,7 @@ namespace Play.Common.MassTransit
                 }
 
                 configurator.UseMessageRetry(configureRetries);
+                configurator.UseInstrumentation(serviceName: serviceSettings.ServiceName);
             });
         }
 
@@ -124,6 +125,7 @@ namespace Play.Common.MassTransit
                 }
 
                 configurator.UseMessageRetry(configureRetries);
+                configurator.UseInstrumentation(serviceName: serviceSettings.ServiceName);
             });
         }
     }

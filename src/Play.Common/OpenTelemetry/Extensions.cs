@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Play.Common.OpenTelemetry;
@@ -12,7 +13,8 @@ namespace Play.Common.OpenTelementry
     {
         public static IServiceCollection AddTracing(
             this IServiceCollection services,
-            IConfiguration config)
+            IConfiguration config
+        )
         {
             services.AddOpenTelemetryTracing(builder =>
             {
@@ -37,6 +39,26 @@ namespace Play.Common.OpenTelementry
                         });
             })
             .AddConsumeObserver<ConsumeObserver>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddMetrics(
+            this IServiceCollection services,
+            IConfiguration config
+        )
+        {
+            services.AddOpenTelemetryMetrics(builder =>
+           {
+               var settings = config.GetSection(nameof(ServiceSettings))
+                                           .Get<ServiceSettings>();
+
+               builder.AddMeter(settings.ServiceName)
+                      .AddMeter("MassTransit")
+                      .AddHttpClientInstrumentation()
+                      .AddAspNetCoreInstrumentation()
+                      .AddPrometheusExporter();
+           });
 
             return services;
         }
